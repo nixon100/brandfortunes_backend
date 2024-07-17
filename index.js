@@ -1,5 +1,5 @@
 import express from "express";
-import mysql from "mysql";
+import mysql from "mysql2";
 import cors from "cors";
 
 
@@ -7,19 +7,46 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// const db = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "%xCn#4fTy*EmJU8p",
+//   database: "test",
+// });
 const db = mysql.createConnection({
-  host: "localhost",
+  host: "192.168.0.117",
   user: "root",
-  password: "%xCn#4fTy*EmJU8p",
-  database: "test",
+  password: "passwordsAreSecrets",
+  database: "brandfortunes",
+  port:3305
 });
+
+// db.connect((err) => {
+//   if (err) {
+//     console.error('error connecting:', err);
+//     return;
+//   }
+//   console.log('connected as id ' + db.threadId);
+// });
+
+app.get("/testingdatabase", (req, res) => {
+  const q = "SELECT * FROM brandfortunes.testt";
+  db.query(q, (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.json(err);
+    }
+    return res.json(data);
+  });
+});
+
 
 app.get("/", (req, res) => {
   res.json("hello");
 });
 
 app.get("/myncom", (req, res) => {
-  const q = "SELECT * FROM test.myntra_com";
+  const q = "SELECT * FROM brandfortunes.myntra_com";
   db.query(q, (err, data) => {
     if (err) {
       console.log(err);
@@ -30,7 +57,7 @@ app.get("/myncom", (req, res) => {
 });
 
 app.get("/flipfix", (req, res) => {
-  const q = "SELECT * FROM test.flipkart_fixedfees";
+  const q = "SELECT * FROM brandfortunes.flipkart_fixedfees";
   db.query(q, (err, data) => {
     if (err) {
       console.log(err);
@@ -41,7 +68,7 @@ app.get("/flipfix", (req, res) => {
 });
 
 app.get("/flipcoll", (req, res) => {
-  const q = "SELECT * FROM test.flipkart_collectionfees";
+  const q = "SELECT * FROM brandfortunes.flipkart_collectionfees";
   db.query(q, (err, data) => {
     if (err) {
       console.log(err);
@@ -52,7 +79,7 @@ app.get("/flipcoll", (req, res) => {
 });
 
 app.get("/flipship", (req, res) => {
-  const q = "SELECT * FROM test.flipkart_shippingfees";
+  const q = "SELECT * FROM brandfortunes.flipkart_shippingfees";
   db.query(q, (err, data) => {
     if (err) {
       console.log(err);
@@ -63,7 +90,7 @@ app.get("/flipship", (req, res) => {
 });
 
 app.get("/fliprevship", (req, res) => {
-  const q = "SELECT * FROM test.flipkart_reverseshippingfees";
+  const q = "SELECT * FROM brandfortunes.flipkart_reverseshippingfees";
   db.query(q, (err, data) => {
     if (err) {
       console.log(err);
@@ -74,7 +101,7 @@ app.get("/fliprevship", (req, res) => {
 });
 
 app.get("/flipdata", (req, res) => {
-  const q = "SELECT * FROM test.flipkart_data";
+  const q = "SELECT * FROM brandfortunes.flipkart_data";
   db.query(q, (err, data) => {
     if (err) {
       console.log(err);
@@ -85,7 +112,7 @@ app.get("/flipdata", (req, res) => {
 });
 
 app.get("/mynfor", (req, res) => {
-    const q = "SELECT * FROM test.myntra_forwardfees";
+    const q = "SELECT * FROM brandfortunes.myntra_forwardfees";
     db.query(q, (err, data) => {
       if (err) {
         console.log(err);
@@ -95,7 +122,7 @@ app.get("/mynfor", (req, res) => {
     });
   });
   app.get("/mynrev", (req, res) => {
-    const q = "SELECT * FROM test.myntra_reversefees";
+    const q = "SELECT * FROM brandfortunes.myntra_reversefees";
     db.query(q, (err, data) => {
       if (err) {
         console.log(err);
@@ -106,7 +133,7 @@ app.get("/mynfor", (req, res) => {
   });
 
   app.get("/calmyndetails", (req, res) => {
-    const q = "SELECT * FROM test.myntra_details";
+    const q = "SELECT * FROM brandfortunes.myntra_details";
     db.query(q, (err, data) => {
       if (err) {
         console.log(err);
@@ -117,7 +144,7 @@ app.get("/mynfor", (req, res) => {
   });
 
   app.get("/calmyncommission", (req, res) => {
-    const q = "SELECT * FROM test.myntra_commission";
+    const q = "SELECT * FROM brandfortunes.myntra_commission";
     db.query(q, (err, data) => {
       if (err) {
         console.log(err);
@@ -128,7 +155,7 @@ app.get("/mynfor", (req, res) => {
   });
 
   app.get("/calmynfor", (req, res) => {
-    const q = "SELECT * FROM test.myntra_forwardfees";
+    const q = "SELECT * FROM brandfortunes.myntra_forwardfees";
     db.query(q, (err, data) => {
       if (err) {
         console.log(err);
@@ -138,7 +165,7 @@ app.get("/mynfor", (req, res) => {
     });
   });
   app.get("/amazondata", (req, res) => {
-    const q = "SELECT * FROM test.amazon_data";
+    const q = "SELECT * FROM brandfortunes.amazon_data";
     db.query(q, (err, data) => {
       if (err) {
         console.log(err);
@@ -148,7 +175,7 @@ app.get("/mynfor", (req, res) => {
     });
   });
   app.get("/amazonclosingfees", (req, res) => {
-    const q = "SELECT * FROM test.amazon_closingfees";
+    const q = "SELECT * FROM brandfortunes.amazon_closingfees";
     db.query(q, (err, data) => {
       if (err) {
         console.log(err);
@@ -158,7 +185,7 @@ app.get("/mynfor", (req, res) => {
     });
   });
   app.get("/amazonclosingfees1", (req, res) => {
-    const q = "SELECT * FROM test.amazon_closingfees1";
+    const q = "SELECT * FROM brandfortunes.amazon_closingfees1";
     db.query(q, (err, data) => {
       if (err) {
         console.log(err);
@@ -169,7 +196,7 @@ app.get("/mynfor", (req, res) => {
   });
 
   app.get("/amazonclosingfees2", (req, res) => {
-    const q = "SELECT * FROM test.amazon_closingfees2";
+    const q = "SELECT * FROM brandfortunes.amazon_closingfees2";
     db.query(q, (err, data) => {
       if (err) {
         console.log(err);
@@ -180,7 +207,7 @@ app.get("/mynfor", (req, res) => {
   });
 
   app.get("/amazonshippingfees", (req, res) => {
-    const q = "SELECT * FROM test.amazon_shippingfees";
+    const q = "SELECT * FROM brandfortunes.amazon_shippingfees";
     db.query(q, (err, data) => {
       if (err) {
         console.log(err);
