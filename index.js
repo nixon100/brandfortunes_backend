@@ -19,11 +19,12 @@ const db = mysql.createConnection({
   database: "test",
 });
 
-// app.get("/ll", function (req, res) {
-//   console.log(req.socket.remoteAddress);
-//   console.log(req.ip);
-//   res.send("your IP is: " + req.ip + req.socket.remoteAddress);
-// });
+app.get("/ll", function (req, res) {
+  console.log(req.socket.remoteAddress);
+  console.log(req.ip);
+  console.log(req.port)
+  res.send("your IP is: " + req.ip +   req.socket.remoteAddress);
+});
 
 
 // const allowedIPs = ['192.168.1.100', '192.168.1.101'];
@@ -40,22 +41,22 @@ const db = mysql.createConnection({
 // });
 
 
-const firewall = (req, res, next) => {
-  const allowedIps = ['192.168.1.100', '192.168.1.200']; // allowed IP addresses
-  const allowedPorts = [8800, 8081]; // allowed ports
+// const firewall = (req, res, next) => {
+//   const allowedIps = ['192.168.1.100', '192.168.1.200']; // allowed IP addresses
+//   const allowedPorts = [8800, 8081]; // allowed ports
 
-  const ip = req.ip;
-  const port = req.port;
-console.log(ip)
-console.log(port)
-  if (allowedIps.includes(ip) && allowedPorts.includes(port)) {
-    next(); // allow the request to proceed
-  } else {
-    res.status(403).send('Forbidden'); // block the request
-  }
-};
+//   const ip = req.ip;
+//   const port = req.port;
+// console.log(ip)
+// console.log(port)
+//   if (allowedIps.includes(ip) && allowedPorts.includes(port)) {
+//     next(); // allow the request to proceed
+//   } else {
+//     res.status(403).send('Forbidden'); // block the request
+//   }
+// };
 
-app.use(firewall);
+// app.use(firewall);
 
 
 
