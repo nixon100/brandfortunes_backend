@@ -42,7 +42,7 @@ const db = mysql.createConnection({
 
 const firewall = (req, res, next) => {
   const allowedIps = ['192.168.1.100', '192.168.1.200']; // allowed IP addresses
-  const allowedPorts = [8080, 8081]; // allowed ports
+  const allowedPorts = [8800, 8081]; // allowed ports
 
   const ip = req.ip;
   const port = req.port;
@@ -60,7 +60,12 @@ app.use(firewall);
 
 
 
-
+// SELECT test.table1.ROLL_NO,test.table2.COURSE_ID,test.table3.SUBJECT , test.table3.MARK
+//   FROM test.table1
+//   JOIN test.table2
+//   ON test.table1.ROLL_NO = test.table2.ROLL_NO
+//   JOIN test.table3
+//   ON test.table2.COURSE_ID = test.table3.COURSE_ID
 
 
 
@@ -68,12 +73,7 @@ app.use(firewall);
 
 
 app.get("/table-join", (req, res) => {
-  const q = `SELECT test.table1.ROLL_NO,test.table2.COURSE_ID,test.table3.SUBJECT , test.table3.MARK
-  FROM test.table1
-  JOIN test.table2
-  ON test.table1.ROLL_NO = test.table2.ROLL_NO
-  JOIN test.table3
-  ON test.table2.COURSE_ID = test.table3.COURSE_ID`
+  const q = `call test.get_student_marks()`
   db.query(q, (err, data) => {
     if (err) {
       console.log(err);
